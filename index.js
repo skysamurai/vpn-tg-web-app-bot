@@ -35,7 +35,7 @@ bot.on('message', async (msg) => {
     if(msg?.web_app_data?.data) {
         try {
             const data = JSON.parse(msg?.web_app_data?.data)
-
+            console.log(data)
             await bot.sendMessage(chatId, 'Спасибо за заявку!')
             await bot.sendMessage(chatId, 'Вы хотите заказать ' + data?.product)
             await bot.sendMessage(chatId, 'Мы с вами свяжемся!')
@@ -55,7 +55,9 @@ app.post('/web-data', async (reg, res) => {
             type: 'article',
             id: queryId,
             title: 'Успешная покупка',
-            input_message_content: {message_text: 'Поздравляю с покупкой, установите VPN Outline на устройство и ждите ключ.'}
+            input_message_content: {
+                message_text: 'Поздравляю с покупкой, установите VPN Outline на устройство и ждите ключ.'
+            }
         })
         return res.status(200).json({});
     } catch (e) {
@@ -64,8 +66,9 @@ app.post('/web-data', async (reg, res) => {
             id: queryId,
             title: 'Покупка не прошла',
             input_message_content: {message_text: 'К сожалению покупка не прошла'}
+        })
+        return res.status(500).json({});
     }
-    return res.status(500).json({});
 })
 const PORT = 8000;
 app.listen(PORT, () => console.log('server started on PORT ' + PORT))
