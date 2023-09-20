@@ -14,11 +14,12 @@ app.use(cors());
 bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
     const text = msg.text;
+
     if (text === '/start') {
         await bot.sendMessage(chatId, `Добро пожаловать за своим VPN`, {
             reply_markup: {
                 keyboard: [
-                    [{text: 'Покупка товара или оплата сервиса', web_app: {url: webAppUrl + '/form'}}]
+                    [{text: 'Зявка на покупку', web_app: {url: webAppUrl + '/form'}}]
                 ]
             }
         })
@@ -44,8 +45,6 @@ bot.on('message', async (msg) => {
         }
 
     }
-
-
 });
 
 app.post('/web-data', async (reg, res) => {
@@ -69,6 +68,7 @@ app.post('/web-data', async (reg, res) => {
         })
         return res.status(500).json({});
     }
-})
+});
+
 const PORT = 8000;
 app.listen(PORT, () => console.log('server started on PORT ' + PORT))
